@@ -1,0 +1,27 @@
+version: "3.7"
+
+volumes:
+  pgdata:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: ./data/pg_data
+  opdata:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: ./data/project_assets
+  op_app_assets:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: ./data/app_assets
+
+services:
+  web:
+    volumes:
+      - ./overrides/app/models/enterprise_token.rb:/app/app/models/enterprise_token.rb
+      - "${OP_APP_ASSETS:-op_app_assets}:/app/app/assets"
